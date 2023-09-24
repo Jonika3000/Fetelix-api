@@ -1,25 +1,24 @@
-package com.example.fetelix.services;
-
+package com.example.fetelix.storage;
 
 import net.coobird.thumbnailator.Thumbnails;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
 @Service
-public class FileSystemStorageService implements ImageService {
+public class FileSystemStorageService implements StorageService {
 
     private final Path rootLocation;
+    private int [] imageSize = {32, 150, 300, 600, 1200};
 
     private FileSystemStorageService(StorageProperties storageProperties) {
         rootLocation = Paths.get(storageProperties.getFolder());
@@ -36,17 +35,19 @@ public class FileSystemStorageService implements ImageService {
 
     @Override
     public void removeFile(String removeFile) {
-//        try {
-//
-//        } catch(MalformedURLException e) {
-//            throw new StorageException("Файл не знаєте: "+ ашду)
-//        }
-
+        for (var size : imageSize) {
+            Path filePath = load(size+"_"+removeFile);
+            File file = new File(filePath.toString());
+            if (file.delete())
+                System.out.println("--Файл успішно видалено--" + file);
+            else
+                System.out.println("++Файл не знайдено++" + file);
+        }
     }
 
     @Override
     public Path load(String fileName) {
-        return null;
+        return rootLocation.resolve(fileName);
     }
 
     @Override
@@ -54,7 +55,7 @@ public class FileSystemStorageService implements ImageService {
         try {
             String extension = "webp";
             String randomFilename = UUID.randomUUID().toString() + "." + extension;
-            int [] imageSize = {32, 150, 300, 600, 1200};
+
             BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(file.getBytes()));
             for(int size : imageSize) {
                 String fileOutputSize = rootLocation.toString()+"/"+size+"_"+randomFilename;

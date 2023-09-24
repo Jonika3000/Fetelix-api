@@ -1,9 +1,9 @@
-package com.example.fetelix.services;
+package com.example.fetelix.storage;
 
 import org.springframework.web.multipart.MultipartFile;
 import java.nio.file.Path;
 
-public interface ImageService {
+public interface StorageService {
     void init();
     void removeFile(String removeFile);
     Path load(String fileName);

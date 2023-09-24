@@ -1,4 +1,4 @@
-package com.example.fetelix.services;
+package com.example.fetelix.storage;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -6,6 +6,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 @ConfigurationProperties("store")
 public class StorageProperties {
-    @Value("${it.step.location}")
+    @Value("${storage.location}")
     private String folder;
 }

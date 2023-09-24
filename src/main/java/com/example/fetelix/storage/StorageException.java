@@ -1,4 +1,4 @@
-package com.example.fetelix.services;
+package com.example.fetelix.storage;
 
 public class StorageException extends RuntimeException {
     public StorageException(String message) { super(message); }

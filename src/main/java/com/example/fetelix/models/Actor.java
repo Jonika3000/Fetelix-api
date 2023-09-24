@@ -1,11 +1,17 @@
 package com.example.fetelix.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "tbl_actors")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Actor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,4 +1,4 @@
-package com.example.fetelix.services;
+package com.example.fetelix.storage;
 
 public class StorageFileNotFoundException extends StorageException {
     public StorageFileNotFoundException(String message) {
