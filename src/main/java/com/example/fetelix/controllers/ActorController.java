@@ -51,16 +51,16 @@ public class ActorController {
         repository.save(cat);
         return actorMapper.ActorToItemDTO(cat);
     }
-//    @GetMapping("{id}")
-//    public ResponseEntity<ActorItemDTO> getActorById(@PathVariable int id) {
-//        Optional<Actor> catOpt = repository.findById((long) id);
-//        if(catOpt.isPresent())
-//        {
-//            var result = actorMapper.listActorsToItemDto(catOpt.get());
-//            return ResponseEntity.ok().body(result);
-//        }
-//        return ResponseEntity.notFound().build();
-//    }
+    @GetMapping("{id}")
+    public ResponseEntity<ActorItemDTO> getActorById(@PathVariable int id) {
+        Optional<Actor> catOpt = repository.findById((long) id);
+        if(catOpt.isPresent())
+        {
+            var result = actorMapper.ActorToItemDTO(catOpt.get());
+            return ResponseEntity.ok().body(result);
+        }
+        return ResponseEntity.notFound().build();
+    }
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteCategoryById(@PathVariable int id) {
         Optional<Actor> catOpt = repository.findById((long) id);
@@ -76,25 +76,31 @@ public class ActorController {
         return ResponseEntity.notFound().build();
     }
 
-//    @PutMapping(value="{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-//    public ResponseEntity<ActorItemDTO> updateCategoryById(@PathVariable int id, @ModelAttribute ActorUpdateDTO dto) {
-//        Optional<Actor> catOpt = repository.findById((long) id);
-//        if(catOpt.isPresent())
-//        {
-//            var cat = catOpt.get();
-//            if(dto.getImage()!=null) {
-//                if (cat.getImage() != null) {
-//                    storageService.removeFile(cat.getImage());
-//                }
-//                String fileName = storageService.saveImage(dto.getImage());
-//                cat.setImage(fileName);
-//            }
-//            cat.setName(dto.getName());
-//            cat.setDescription(dto.getDescription());
-//            categoryRepository.save(cat);
-//            var result = categoryMapper.categoryToItemDTO(cat);
-//            return ResponseEntity.ok().body(result);
-//        }
-//        return ResponseEntity.notFound().build();
-//    }
+    @PutMapping(value="{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ActorItemDTO> updateActorById(@PathVariable int id, @ModelAttribute ActorUpdateDTO dto) {
+        Optional<Actor> catOpt = repository.findById((long) id);
+        if(catOpt.isPresent())
+        {
+            var cat = catOpt.get();
+            if(dto.getImage()!=null) {
+                if (cat.getImage() != null) {
+                    storageService.removeFile(cat.getImage());
+                }
+                String fileName = storageService.saveImage(dto.getImage());
+                cat.setImage(fileName);
+            }
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date birthday = null;
+            try {
+                birthday = dateFormat.parse(dto.getBirthday());
+            } catch (ParseException e) {
+            }
+            cat.setName(dto.getName());
+            cat.setBirthday(birthday);
+            repository.save(cat);
+            var result = actorMapper.ActorToItemDTO(cat);
+            return ResponseEntity.ok().body(result);
+        }
+        return ResponseEntity.notFound().build();
+    }
 }

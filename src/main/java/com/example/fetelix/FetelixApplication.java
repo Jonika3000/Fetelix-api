@@ -2,6 +2,7 @@ package com.example.fetelix;
 
 import com.example.fetelix.storage.StorageProperties;
 import com.example.fetelix.storage.StorageService;
+import com.example.fetelix.services.SeedService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,12 +17,14 @@ public class FetelixApplication {
 		SpringApplication.run(FetelixApplication.class, args);
 	}
 	@Bean
-	CommandLineRunner init(StorageService storageService) {
+	CommandLineRunner init(StorageService storageService, SeedService seedService) {
 		return (args)-> {
 			try {
 				storageService.init();
+				seedService.seedRoleData();
+				seedService.seedUserData();
 			}catch(Exception ex) {
-				System.out.println("Some problems"+ex.getMessage());
+				System.out.println("Some problems "+ex.getMessage());
 			}
 		};
 	}

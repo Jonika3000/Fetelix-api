@@ -1,8 +1,10 @@
 package com.example.fetelix.models;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 
 @Entity
+@Builder
 @Table(name = "tbl_genre")
 public class Genre {
     @Id
@@ -10,6 +12,10 @@ public class Genre {
     private int id;
     @Column(name = "name")
     private String name;
+
+    public Genre() {
+
+    }
 
     public int getId() {
         return this.id;
