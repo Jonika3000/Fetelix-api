@@ -5,6 +5,7 @@ import com.example.fetelix.dto.actor.ActorUpdateDTO;
 import com.example.fetelix.models.Actor;
 import com.example.fetelix.repositories.ActorRepository;
 import com.example.fetelix.storage.StorageService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,6 +22,7 @@ import java.util.Optional;
 @RestController
 @AllArgsConstructor
 @RequestMapping("api/actor")
+@SecurityRequirement(name="my-api")
 public class ActorController {
     private final ActorRepository repository;
     private final StorageService storageService;

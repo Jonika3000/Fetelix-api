@@ -2,9 +2,11 @@ package com.example.fetelix.models;
 
 import jakarta.persistence.*;
 import lombok.Builder;
+import lombok.Data;
 
 @Entity
 @Builder
+@Data
 @Table(name = "tbl_genre")
 public class Genre {
     @Id
@@ -13,23 +15,4 @@ public class Genre {
     @Column(name = "name")
     private String name;
 
-    public Genre() {
-
-    }
-
-    public int getId() {
-        return this.id;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

@@ -3,6 +3,7 @@ package com.example.fetelix.controllers;
 import com.example.fetelix.mappers.GenreMapper;
 import com.example.fetelix.models.Genre;
 import com.example.fetelix.repositories.GenreRepository;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,6 +16,7 @@ import java.util.Optional;
 @RestController
 @AllArgsConstructor
 @RequestMapping("api/genre")
+@SecurityRequirement(name="my-api")
 public class GenreController {
     private final GenreRepository repository;
     private final GenreMapper genreMapper;
