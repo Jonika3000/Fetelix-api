@@ -16,10 +16,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(length = 100, nullable = false)
-    private String firstName;
+    private String family_name;
     @Column(length = 100, nullable = false)
-    private String lastName;
+    private String given_name;
     @Column(length = 100, nullable = false)
+    private String locale;
+    @Column(nullable = false)
+    private String picture;
+    @Column(nullable = false)
+    private String name;
+    @Column(nullable = false)
     private String email;
     @Column(length = 20, nullable = false)
     private String phone;

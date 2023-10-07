@@ -36,23 +36,23 @@ public class SeedService {
         }
     }
     public void seedUserData() {
-        if(userRepository.count() == 0) {
-            var user = User
-                    .builder()
-                    .firstName("admin")
-                    .lastName("admin")
-                    .phone("admin")
-                    .email("admin@gmail.com")
-                    .password(passwordEncoder.encode("123456"))
-                    .build();
-            userRepository.save(user);
-            var role = roleRepository.findByName(Roles.Admin);
-            var ur = UserRole
-                    .builder()
-                    .role(role)
-                    .user(user)
-                    .build();
-            userRoleRepository.save(ur);
-        }
+//        if(userRepository.count() == 0) {
+//            var user = User
+//                    .builder()
+//                    .name("admin")
+//                    .lastName("admin")
+//                    .phone("admin")
+//                    .email("admin@gmail.com")
+//                    .password(passwordEncoder.encode("123456"))
+//                    .build();
+//            userRepository.save(user);
+//            var role = roleRepository.findByName(Roles.Admin);
+//            var ur = UserRole
+//                    .builder()
+//                    .role(role)
+//                    .user(user)
+//                    .build();
+//            userRoleRepository.save(ur);
+//        }
     }
 }
