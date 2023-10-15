@@ -30,8 +30,8 @@ public class JwtService {
 
         return Jwts.builder()
                 .setSubject(format("%s,%s", user.getId(), user.getEmail()))
-                .claim("email", user.getEmail())
-                //.claim("image", user.getImage())
+                .claim("name", user.getName())
+                .claim("image", user.getPicture())
                 .claim("roles", roles.stream()
                         .map((role) -> role.getRole().getName()).toArray(String []:: new))
                 .setIssuer(jwtIssuer)

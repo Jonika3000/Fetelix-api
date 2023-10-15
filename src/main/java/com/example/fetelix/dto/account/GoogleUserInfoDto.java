@@ -7,7 +7,7 @@ public class GoogleUserInfoDto {
     private String email;
     private String family_name;
     private String given_name;
-    private int id;
+    private String id;
     private String locale;
     private String name;
     private String picture;

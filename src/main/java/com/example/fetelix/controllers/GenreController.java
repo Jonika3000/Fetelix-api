@@ -27,8 +27,9 @@ public class GenreController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Genre create(@ModelAttribute Genre dto) {
+    @PostMapping()
+    public Genre create(@RequestBody Genre dto) {
+        int a = 10;
         var cat = Genre
                 .builder()
                 .name(dto.getName())
