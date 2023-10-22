@@ -1,5 +1,6 @@
 package com.example.fetelix.controllers;
 
+import com.example.fetelix.dto.genre.GenreDto;
 import com.example.fetelix.mappers.GenreMapper;
 import com.example.fetelix.models.Genre;
 import com.example.fetelix.repositories.GenreRepository;
@@ -23,22 +24,26 @@ public class GenreController {
 
     @GetMapping()
     public ResponseEntity<List<Genre>> index() {
-        var result = genreMapper.listGenresToItemDto(repository.findAll());
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        var list  = repository.findAll();
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @PostMapping()
-    public Genre create(@RequestBody Genre dto) {
-        int a = 10;
-        var cat = Genre
-                .builder()
-                .name(dto.getName())
-                .build();
-        repository.save(cat);
-        return genreMapper.GenreToItemDTO(cat);
+    public GenreDto create(@RequestBody GenreDto dto) {
+        try {
+            var cat = Genre
+                    .builder()
+                    .name(dto.getName())
+                    .build();
+            repository.save(cat);
+            return genreMapper.GenreToItemDTO(cat);
+        } catch (Exception ex) {
+          var a = ex.getMessage();
+        }
+        return null;
     }
     @GetMapping("{id}")
-    public ResponseEntity<Genre> getGenreById(@PathVariable int id) {
+    public ResponseEntity<GenreDto> getGenreById(@PathVariable int id) {
         Optional<Genre> catOpt = repository.findById((long) id);
         if(catOpt.isPresent())
         {
@@ -60,7 +65,7 @@ public class GenreController {
     }
 
     @PutMapping(value="{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Genre> updateGenreById(@PathVariable int id, @ModelAttribute Genre dto) {
+    public ResponseEntity<GenreDto> updateGenreById(@PathVariable int id, @ModelAttribute Genre dto) {
         Optional<Genre> catOpt = repository.findById((long) id);
         if(catOpt.isPresent())
         {

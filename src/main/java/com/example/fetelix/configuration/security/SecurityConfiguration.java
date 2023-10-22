@@ -38,6 +38,8 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/genre/**").hasAuthority(Roles.Admin)
                         .requestMatchers(HttpMethod.GET, "/api/actor").permitAll()
                         .requestMatchers("/api/actor/**").hasAuthority(Roles.Admin)
+                        .requestMatchers(HttpMethod.GET, "/api/director").permitAll()
+                        .requestMatchers("/api/director/**").hasAuthority(Roles.Admin)
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(it->it.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
