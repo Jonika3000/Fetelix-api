@@ -1,8 +1,16 @@
 package com.example.fetelix.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "tbl_actors_movies")
 public class ActorsMovies {
     @Id
@@ -14,28 +22,4 @@ public class ActorsMovies {
     @ManyToOne
     @JoinColumn(name = "movie")
     private Movie movie;
-
-    public int getId() {
-        return this.id;
-    }
-
-    public Actor getActor() {
-        return this.actor;
-    }
-
-    public Movie getMovie() {
-        return this.movie;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setActor(Actor actor) {
-        this.actor = actor;
-    }
-
-    public void setMovie(Movie movie) {
-        this.movie = movie;
-    }
 }

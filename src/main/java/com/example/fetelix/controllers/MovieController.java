@@ -1,17 +1,11 @@
 package com.example.fetelix.controllers;
 
-import com.example.fetelix.dto.actor.ActorItemDTO;
-import com.example.fetelix.dto.actor.ActorUpdateDTO;
 import com.example.fetelix.dto.movie.MovieItemDto;
 import com.example.fetelix.dto.movie.MoviePostDto;
 import com.example.fetelix.dto.movie.MovieUpdateDto;
-import com.example.fetelix.mappers.DirectorMapper;
 import com.example.fetelix.mappers.MovieMapper;
-import com.example.fetelix.models.Actor;
-import com.example.fetelix.models.Director;
-import com.example.fetelix.models.Movie;
-import com.example.fetelix.repositories.DirectorRepository;
-import com.example.fetelix.repositories.MovieRepository;
+import com.example.fetelix.models.*;
+import com.example.fetelix.repositories.*;
 import com.example.fetelix.storage.StorageService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
@@ -32,9 +26,14 @@ import java.util.Optional;
 @SecurityRequirement(name="my-api")
 public class MovieController {
     private final MovieRepository repository;
+    private final ActorRepository actorRepository;
     private final DirectorRepository repositoryDirector;
     private final StorageService storageService;
     private final MovieMapper movieMapper;
+    private final ActorsMoviesRepositrory actorsMoviesRepositrory;
+    private final GenresMoviesRepository genresMoviesRepository;
+    private final GenreRepository genreRepository;
+    private final ImagesMoviesRepository imagesMoviesRepository;
     @GetMapping()
     public ResponseEntity<List<MovieItemDto>> index() {
         var result = movieMapper.listMovieToItemDto(repository.findAll());
@@ -66,6 +65,25 @@ public class MovieController {
                 .director(directorMovieCat.get())
                 .build();
         repository.save(cat);
+        for (var id:dto.getActorsIds()) {
+            ActorsMovies am = new ActorsMovies();
+            am.setActor((actorRepository.findById((long)id)).get());
+            am.setMovie(cat);
+            actorsMoviesRepositrory.save(am);
+        }
+        for (var id:dto.getGenresIds()) {
+            GenreMovie gm = new GenreMovie();
+            gm.setMovie(cat);
+            gm.setGenre((genreRepository.findById((long)id)).get());
+            genresMoviesRepository.save(gm);
+        }
+        for (var image:dto.getImages()) {
+            ImagesMovie im = new ImagesMovie();
+            im.setMovie(cat);
+            String nameImage = storageService.saveImage(image);
+            im.setImagePath(nameImage);
+            imagesMoviesRepository.save(im);
+        }
         return movieMapper.MovieToItemDTO(cat);
     }
 
