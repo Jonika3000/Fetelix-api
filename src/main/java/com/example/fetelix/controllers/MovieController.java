@@ -44,14 +44,16 @@ public class MovieController {
     public MovieItemDto create(@ModelAttribute MoviePostDto dto)
     {
         String fileName = storageService.saveImage(dto.getImage());
+        String movieName = storageService.saveVideo(dto.getVideoPath());
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        int d = dto.getDirectorId();
         Optional<Director> directorMovieCat = repositoryDirector.findById((long) dto.getDirectorId());
         Date releaseDate = null;
         try {
             releaseDate = dateFormat.parse(dto.getReleaseDate());
         } catch (ParseException e) {
         }
-
+        ///2023-11-01T21:30:54.516+02:00  WARN 1576 --- [nio-8080-exec-8] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public com.example.fetelix.dto.movie.MovieItemDto com.example.fetelix.controllers.MovieController.create(com.example.fetelix.dto.movie.MoviePostDto): [Field error in object 'moviePostDto' on field 'videoPath': rejected value [org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@18dc6237]; codes [typeMismatch.moviePostDto.videoPath,typeMismatch.videoPath,typeMismatch.java.lang.String,typeMismatch]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [moviePostDto.videoPath,videoPath]; arguments []; default message [videoPath]]; default message [Failed to convert property value of type 'org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile' to required type 'java.lang.String' for property 'videoPath'; Cannot convert value of type 'org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile' to required type 'java.lang.String' for property 'videoPath': no matching editors or conversion strategy found]] ]
         var cat = Movie
                 .builder()
                 .title(dto.getTitle())
@@ -61,7 +63,7 @@ public class MovieController {
                 .description(dto.getDescription())
                 .time(dto.getTime())
                 .slug(dto.getSlug())
-                .videoPath(dto.getVideoPath())
+                .videoPath(movieName)
                 .director(directorMovieCat.get())
                 .build();
         repository.save(cat);

@@ -8,4 +8,5 @@ public interface StorageService {
     void removeFile(String removeFile);
     Path load(String fileName);
     String saveImage(MultipartFile file);
+    String saveVideo(MultipartFile file);
 }

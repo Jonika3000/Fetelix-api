@@ -17,7 +17,7 @@ public class MoviePostDto {
     private int time;
     private int directorId;
     private String slug;
-    private String videoPath;
+    private MultipartFile videoPath;
     private List<Integer> actorsIds;
     private List<Integer> genresIds;
     private List<MultipartFile> images;

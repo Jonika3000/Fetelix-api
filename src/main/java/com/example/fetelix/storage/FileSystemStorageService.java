@@ -66,7 +66,18 @@ public class FileSystemStorageService implements StorageService {
             }
             return randomFilename;
         } catch(IOException e) {
-            throw new StorageException("Проблема перетвоення файлу!", e);
+            throw new StorageException("Error save image", e);
+        }
+    }
+    @Override
+    public String saveVideo(MultipartFile file) {
+        try {
+            String randomFilename = UUID.randomUUID().toString() + "." + "mp4";
+            Path fileNameAndPath = Paths.get(rootLocation.toString(), randomFilename);
+            Files.write(fileNameAndPath, file.getBytes());
+            return randomFilename;
+        } catch (Exception e) {
+            throw new StorageException("Error save video", e);
         }
     }
 }
