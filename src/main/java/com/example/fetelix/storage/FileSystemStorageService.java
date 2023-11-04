@@ -29,7 +29,7 @@ public class FileSystemStorageService implements StorageService {
             if(!Files.exists(rootLocation))
                 Files.createDirectory(rootLocation);
         }catch(IOException e) {
-            throw new StorageException("Помилка створення папки!");
+            throw new StorageException("Error");
         }
     }
 
@@ -39,9 +39,9 @@ public class FileSystemStorageService implements StorageService {
             Path filePath = load(size+"_"+removeFile);
             File file = new File(filePath.toString());
             if (file.delete())
-                System.out.println("--Файл успішно видалено--" + file);
+                System.out.println("File deleted" + file);
             else
-                System.out.println("++Файл не знайдено++" + file);
+                System.out.println("Not found" + file);
         }
     }
 
