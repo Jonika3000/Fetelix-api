@@ -9,6 +9,7 @@ import com.example.fetelix.repositories.*;
 import com.example.fetelix.storage.StorageService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -89,14 +90,15 @@ public class MovieController {
         return movieMapper.MovieToItemDTO(cat);
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<MovieItemDto> getMovieById(@PathVariable int id) {
-        Optional<Movie> catOpt = repository.findById((long) id);
-        if(catOpt.isPresent())
-        {
-            var result = movieMapper.MovieToItemDTO(catOpt.get());
-            return ResponseEntity.ok().body(result);
-        }
+    @GetMapping("{slug}")
+    public ResponseEntity<MovieItemDto> getMovieBySlug(@PathVariable String slug) {
+            List<Movie> movies = repository.findAll();
+            for (var movie:movies) {
+                if (movie.getSlug().equals(slug)) {
+                 var result = movieMapper.MovieToItemDTO(movie);
+                 return ResponseEntity.ok().body(result);
+             }
+            }
         return ResponseEntity.notFound().build();
     }
 
